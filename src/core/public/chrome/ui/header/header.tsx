@@ -657,6 +657,7 @@ export function Header({
 
   return (
     <>
+      <div id="globalBanner" />
       <header className={className} data-test-subj="headerGlobalNav">
         <div id="globalHeaderBars">
           {!useUpdatedHeader && useExpandedHeader && renderLegacyExpandedHeader()}

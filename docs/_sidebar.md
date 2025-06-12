@@ -74,6 +74,7 @@
       - [Telemetry](../src/plugins/telemetry/README.md)
       - [Telemetry_collection_manager](../src/plugins/telemetry_collection_manager/README.md)
       - [Telemetry_management_section](../src/plugins/telemetry_management_section/README.md)
+      - [Test](../src/plugins/test/README.md)
       - [Ui_actions](../src/plugins/ui_actions/README.md)
       - [Url_forwarding](../src/plugins/url_forwarding/README.md)
       - [Usage_collection](../src/plugins/usage_collection/README.md)

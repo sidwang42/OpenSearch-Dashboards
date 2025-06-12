@@ -32,10 +32,10 @@ $osdHeaderOffset: $euiHeaderHeightCompensation;
 }
 
 .headerIsExpanded .deLayout {
-  height: calc(100vh - #{$osdHeaderOffset * 2});
+  height: calc(100vh - #{$osdHeaderOffset * 2} - var(--global-banner-height));
 
   &.dsc--next {
-    height: calc(100vh - #{$osdHeaderOffset * 3});
+    height: calc(100vh - #{$osdHeaderOffset * 3} - var(--global-banner-height));
   }
 }
 

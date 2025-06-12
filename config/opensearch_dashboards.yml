@@ -379,3 +379,5 @@
 
 # Set the value to true to enable the new UI for savedQueries in Discover
 # data.savedQueriesNewUI.enabled: true
+# Set the banner text for the test plugin
+test.banner.text: '✨ **New:** &nbsp &nbsp OpenSearch UI is now available! &nbsp &nbsp Try OpenSearch UI for new AI features, zero down-time, and connecting with multiple clusters. [Try it now →](https://opensearch.org)'

@@ -30,6 +30,7 @@
 
 import { UiSettingsParams } from '../../../types';
 import { getAccessibilitySettings } from './accessibility';
+import { getBannerSettings } from './banner';
 import { getDateFormatSettings } from './date_formats';
 import { getMiscUiSettings } from './misc';
 import { getNavigationSettings } from './navigation';
@@ -40,6 +41,7 @@ import { getStateSettings } from './state';
 export const getCoreSettings = (): Record<string, UiSettingsParams> => {
   return {
     ...getAccessibilitySettings(),
+    ...getBannerSettings(),
     ...getDateFormatSettings(),
     ...getMiscUiSettings(),
     ...getNavigationSettings(),
