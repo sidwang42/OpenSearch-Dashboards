@@ -1,10 +1,7 @@
-@import "@elastic/eui/src/themes/eui/eui_globals";
-
 /* Global banner styling */
 #opensearch-dashboards-banner {
   background-color: "primary";
   padding: 8px 16px;
-  box-shadow: $euiShadowSmall;
 }
 
 /* Ensure the global banner has proper styling and positioning */
