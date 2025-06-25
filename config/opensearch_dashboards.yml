@@ -346,9 +346,9 @@
 # Please note, workspace will not work with multi-tenancy. To enable workspace feature, you need to disable multi-tenancy first with `opensearch_security.multitenancy.enabled: false`
 # Please uncomment below uiSettings to enable new home/navigation experience when workspace is enabled
 # workspace.enabled: false
-# uiSettings:
-#   overrides:
-#     "home:useNewHomePage": true
+#uiSettings:
+#  overrides:
+#    "home:useNewHomePage": true
 
 # Set a maximum number of workspaces
 # by default, there is no limit.
@@ -380,4 +380,5 @@
 # Set the value to true to enable the new UI for savedQueries in Discover
 # data.savedQueriesNewUI.enabled: true
 # Set the banner text for the test plugin
-test.banner.text: '✨ **New:** &nbsp &nbsp OpenSearch UI is now available! &nbsp &nbsp Try OpenSearch UI for new AI features, zero down-time, and connecting with multiple clusters. [Try it now →](https://opensearch.org)'
+test.enabled: true
+test.banner.text: '💡 **New Release:** Transform your OpenSearch experience with our latest UI featuring AI integration and zero-downtime updates. [Explore now →](https://aws.amazon.com/blogs/big-data/amazon-opensearch-service-launches-the-next-generation-opensearch-ui/)'

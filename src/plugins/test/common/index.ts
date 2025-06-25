@@ -3,7 +3,7 @@ export const PLUGIN_NAME = 'test';
 
 export interface BannerConfig {
   text: string;
-  color: 'primary' | 'success' | 'warning' | 'danger';
+  color: 'primary' | 'warning' | 'danger';
   iconType?: string;
   isVisible: boolean;
   useMarkdown?: boolean;

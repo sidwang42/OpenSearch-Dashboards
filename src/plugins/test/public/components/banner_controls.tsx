@@ -41,7 +41,6 @@ export const BannerControls: React.FC<BannerControlsProps> = ({ bannerService })
 
   const colorOptions = [
     { value: 'primary', text: 'Primary' },
-    { value: 'success', text: 'Success' },
     { value: 'warning', text: 'Warning' },
     { value: 'danger', text: 'Danger' },
   ];
@@ -56,7 +55,7 @@ export const BannerControls: React.FC<BannerControlsProps> = ({ bannerService })
   const updateBanner = () => {
     actualBannerService.updateBannerConfig({
       text,
-      color: color as 'primary' | 'success' | 'warning' | 'danger',
+      color: color as 'primary' | 'warning',
       iconType,
       isVisible,
       useMarkdown,

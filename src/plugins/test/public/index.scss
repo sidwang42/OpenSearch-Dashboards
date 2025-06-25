@@ -4,7 +4,22 @@
   padding: 8px 16px;
 }
 
-/* Ensure the global banner has proper styling and positioning */
+/* =================================================================
+   GLOBAL BANNER POSITIONING
+   ================================================================= */
+
+/**
+ * 1. CSS Variable - Defines the space needed for the global banner
+ *    Default value is 0px when no banner is present
+ *    Will be dynamically set to the actual banner height when visible
+ */
+:root {
+  --global-banner-height: 0;
+}
+
+/**
+ * 2. Banner container - Ensures minimum height matches the variable
+ */
 #globalBanner {
   position: fixed;
   top: 0;
@@ -12,12 +27,43 @@
   right: 0;
   z-index: 1100; /* Higher than header z-index (1000) */
   width: 100%;
-
-  /* Apply styles to a wrapper div instead of directly to the EUI component */
-  .bannerCalloutWrapper {
-    border-radius: 0;
-    margin-bottom: 0;
+  min-height: var(--global-banner-height);
+  
+  /* Minimal CSS to ensure dismiss button is visible for all banner colors */
+  .euiCallOut__closeButton {
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 }
 
-/* Let the headers handle their own positioning */
+/**
+ * 3. Smooth transitions - Prevents jarring layout shifts when banner height changes
+ */
+// stylelint-disable-next-line @osd/stylelint/no_modifying_global_selectors, selector-pseudo-class-no-unknown
+.euiHeader {
+  transition: top 0.2s ease;
+}
+
+/**
+ * 4. Header positioning - Places headers below the banner
+ *    expandedHeader: directly below the banner
+ *    primaryHeader: below the expanded header (banner + 47px), adding not newTopNavHeader to avoid affecting the new ui design
+ */
+.expandedHeader {
+  top: var(--global-banner-height) !important;
+}
+
+.primaryHeader:not(.newTopNavHeader) {
+  top: calc(var(--global-banner-height) + $euiSizeXL + $euiSizeM) !important;
+} 
+
+/**
+ * 5. Fix for body padding when header is expanded and fixed
+ *    Ensures content doesn't overlap with headers
+ */
+// stylelint-disable-next-line @osd/stylelint/no_modifying_global_selectors, selector-pseudo-class-no-unknown
+.headerIsExpanded.euiBody--headerIsFixed {
+  padding-top: calc(var(--global-banner-height) + $euiSizeXL + $euiSizeM + $euiSizeXL + $euiSizeM) !important;
+}
+
+/* End of Global Banner Positioning */

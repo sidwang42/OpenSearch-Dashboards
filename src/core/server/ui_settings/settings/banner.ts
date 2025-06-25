@@ -53,7 +53,6 @@ export const getBannerSettings = (): Record<string, UiSettingsParams> => {
       category: ['banner'],
       schema: schema.oneOf([
         schema.literal('primary'),
-        schema.literal('success'),
         schema.literal('warning'),
         schema.literal('danger'),
       ]),
@@ -74,7 +73,6 @@ export const getBannerSettings = (): Record<string, UiSettingsParams> => {
         schema.literal('help'),
         schema.literal('alert'),
         schema.literal('warning'),
-        schema.literal('check'),
         schema.literal('bell'),
       ]),
     },

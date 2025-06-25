@@ -16,6 +16,7 @@ export class TestPlugin implements Plugin<TestPluginSetup, TestPluginStart> {
 
   public setup(core: CoreSetup): TestPluginSetup {
     // Initialize banner with config values
+    // TODO: use api instead
     const config = this.initializerContext.config.get<TestPluginConfig>();
 
     // Get banner text from config

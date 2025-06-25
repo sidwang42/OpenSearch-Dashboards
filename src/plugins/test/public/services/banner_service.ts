@@ -57,21 +57,15 @@ export class BannerService {
       const isVisible = uiSettings.get('banner:visible');
       const useMarkdown = uiSettings.get('banner:useMarkdown');
 
-      if (typeof content === 'string' && content.length > 0) {
-        this.updateBannerConfig({
-          text: content,
-          color: color as 'primary' | 'success' | 'warning' | 'danger',
-          iconType: iconType as string,
-          isVisible: isVisible as boolean,
-          useMarkdown: useMarkdown as boolean,
-        });
-      } else {
-        // If no content is set, use the initial config values but respect visibility setting
-        this.updateBannerConfig({
-          ...initialConfig,
-          isVisible: isVisible as boolean,
-        });
-      }
+      // Always update all settings from UI settings
+      this.updateBannerConfig({
+        // If content is empty, use the initial text from config
+        text: typeof content === 'string' && content.length > 0 ? content : initialConfig.text,
+        color: color as 'primary' | 'success' | 'warning' | 'danger',
+        iconType: iconType as string,
+        isVisible: isVisible as boolean,
+        useMarkdown: useMarkdown as boolean,
+      });
     };
 
     // Initial update
