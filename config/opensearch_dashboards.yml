@@ -381,4 +381,4 @@
 # data.savedQueriesNewUI.enabled: true
 
 # Set the value to true to enable the banner plugin
-# banner.enabled: true
+banner.enabled: true

@@ -12,7 +12,9 @@
 import { CoreSetup, CoreStart, Plugin, PluginInitializerContext } from '../../../core/public';
 import { BannerPluginSetup, BannerPluginStart } from './types';
 import { BannerService } from './services/banner_service';
+import { BannerApiService } from './services/banner_api_service';
 import { renderBanner, unmountBanner, setInitialBannerHeight } from './services/render_banner';
+import { BannerConfig } from '../common';
 
 export class BannerPlugin implements Plugin<BannerPluginSetup, BannerPluginStart> {
   private readonly bannerService = new BannerService();
@@ -20,22 +22,28 @@ export class BannerPlugin implements Plugin<BannerPluginSetup, BannerPluginStart
   constructor(private readonly initializerContext: PluginInitializerContext) {}
 
   public setup(core: CoreSetup): BannerPluginSetup {
-    // Get configuration from server
-    const config = this.initializerContext.config.get() as any;
+    // Initialize with default values
+    const defaultConfig: BannerConfig = {
+      text: '',
+      color: 'primary',
+      iconType: '',
+      isVisible: false,
+      useMarkdown: false,
+    };
 
-    // Setup banner with configuration values
-    this.bannerService.setup({
-      text: config.text,
-      color: config.color,
-      iconType: config.iconType,
-      isVisible: config.isVisible,
-      useMarkdown: config.useMarkdown,
-    });
+    this.bannerService.setup(defaultConfig);
 
     return {};
   }
 
-  public start(core: CoreStart): BannerPluginStart {
+  public async start(core: CoreStart): Promise<BannerPluginStart> {
+    // Create API service
+    const apiService = new BannerApiService(core.http, this.bannerService);
+
+    // Fetch banner configuration from API
+    await apiService.fetchBannerConfig();
+
+    // Get current config after API fetch
     const currentConfig = this.bannerService.getCurrentConfig();
 
     // Set initial height to prevent layout shifts
