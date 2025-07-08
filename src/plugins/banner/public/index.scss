@@ -3,22 +3,16 @@
    ================================================================= */
 
 /**
- * Header spacing variables
- */
-$headerWidth: $ouiSizeL * 2 + 1px;
-$expandedHeaderWidth: $headerWidth * 2;
-
-/**
- * 1. CSS Variable - Defines the space needed for the global banner
- *    Default value is 0px when no banner is present
- *    Will be dynamically set to the actual banner height when visible
+ * CSS Variable - Defines the space needed for the global banner
+ * Default value is 0px when no banner is present
+ * Will be dynamically set to the actual banner height when visible
  */
 :root {
   --global-banner-height: 0;
 }
 
 /**
- * 2. Banner container - Ensures minimum height matches the variable
+ * Banner container - Ensures minimum height matches the variable
  */
 #pluginGlobalBanner {
   position: fixed;
@@ -30,58 +24,91 @@ $expandedHeaderWidth: $headerWidth * 2;
   min-height: var(--global-banner-height);
 }
 
-/**
- * 3. Smooth transitions - Prevents jarring layout shifts when banner height changes
- */
-/* stylelint-disable @osd/stylelint/no_modifying_global_selectors */
-.euiHeader {
-  transition: top 0.3s ease;
-}
+.banner-visible {
+  /* stylelint-disable @osd/stylelint/no_modifying_global_selectors */
+  /**
+  * Header spacing variables
+  */
+  $headerWidth: $ouiSizeL * 2 + 1px;
+  $expandedHeaderWidth: $headerWidth * 2;
 
-/**
- * 4. Header positioning - Places headers below the banner
- *    expandedHeader: directly below the banner
- *    primaryHeader: below the expanded header
- */
-.expandedHeader {
-  top: var(--global-banner-height) !important;
-}
+  /**
+  * Smooth transitions - Prevents jarring layout shifts when banner height changes
+  */
+  .euiHeader {
+    transition: top 0.3s ease;
+  }
 
-.primaryHeader:not(.newTopNavHeader) {
-  top: calc(var(--global-banner-height) + $headerWidth) !important;
-}
+  /**
+   * Header positioning - Places headers below the banner
+   * expandedHeader: directly below the banner
+   * primaryHeader: below the expanded header
+   */
+  .expandedHeader {
+    top: var(--global-banner-height) !important;
+  }
 
-/**
- * 5. Fix for body padding when header is expanded and fixed
- *    Ensures content doesn't overlap with headers
- */
-.headerIsExpanded.euiBody--headerIsFixed {
-  padding-top: calc(var(--global-banner-height) + $expandedHeaderWidth) !important;
-}
+  .primaryHeader:not(.newTopNavHeader) {
+    top: calc(var(--global-banner-height) + $headerWidth) !important;
+  }
 
-/**
- * 6. Fix for flayout position when header is expanded and fixed
- *    Ensures content doesn't overlap with headers
- */
-.euiOverlayMask {
-  top: calc(var(--global-banner-height) + $expandedHeaderWidth) !important;
-}
+  /**
+   * Fix for body padding when header is expanded and fixed
+   * Ensures content doesn't overlap with headers
+   */
+  .headerIsExpanded.euiBody--headerIsFixed {
+    padding-top: calc(var(--global-banner-height) + $expandedHeaderWidth) !important;
+  }
 
-.euiFlyout {
-  top: calc(var(--global-banner-height) + $expandedHeaderWidth) !important;
-}
+  /**
+   * Fix for flyout position when header is expanded and fixed
+   * Ensures content doesn't overlap with headers
+   */
+  .euiOverlayMask {
+    top: calc(var(--global-banner-height) + $expandedHeaderWidth) !important;
+  }
 
-/**
- * 7. Override content area min-height to account for global banner
- *    Ensures content area is properly sized when banner is present
- */
-.app-wrapper {
-  min-height: calc(100vh - $expandedHeaderWidth - var(--global-banner-height)) !important;
-}
+  .euiFlyout {
+    top: calc(var(--global-banner-height) + $expandedHeaderWidth) !important;
+  }
 
-.headerIsExpanded .homWrapper {
-  min-height: calc(100vh - $expandedHeaderWidth - var(--global-banner-height)) !important;
-}
+  /**
+   * Override content area min-height to account for global banner
+   * Ensures content area is properly sized when banner is present
+   */
+  .app-wrapper {
+    min-height: calc(100vh - $expandedHeaderWidth - var(--global-banner-height)) !important;
+  }
+
+  .headerIsExpanded .homWrapper {
+    min-height: calc(100vh - $expandedHeaderWidth - var(--global-banner-height)) !important;
+  }
+
 /* stylelint-enable @osd/stylelint/no_modifying_global_selectors */
+}
+/* End of Global Banner Positioning */
 
+/* =================================================================
+   GLOBAL BANNER POSITIONING FOR NEW HOME EXPERIENCE
+   ================================================================= */
+
+.banner-visible-new {
+/* stylelint-disable @osd/stylelint/no_modifying_global_selectors */
+  .content {
+    padding-top: var(--global-banner-height) !important;
+  }
+
+  .euiFlyout {
+    top: var(--global-banner-height) !important;
+  }
+  
+  /**
+   * Navigation toggle button positioning for new home page experience
+   */
+  .newPageTopNavExpander {
+    top: var(--global-banner-height) !important;
+  }
+
+/* stylelint-enable @osd/stylelint/no_modifying_global_selectors */
+}
 /* End of Global Banner Positioning */

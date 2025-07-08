@@ -21,11 +21,9 @@ export class BannerPlugin implements Plugin<BannerPluginSetup, BannerPluginStart
   }
 
   public async start(core: CoreStart): Promise<BannerPluginStart> {
-    // Set initial height to prevent layout shifts
-    setInitialBannerHeight(false);
-
-    // Render the banner component and pass the HTTP client
-    renderBanner(core.http);
+    // Render the banner component and pass the HTTP client and UI settings
+    // The initial banner height will be set in the renderBanner function
+    renderBanner(core.http, core.uiSettings);
 
     return {};
   }

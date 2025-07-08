@@ -13,7 +13,7 @@ import React, { Fragment, useEffect, useState, Suspense, useRef } from 'react';
 import { EuiCallOut, EuiLoadingSpinner } from '@elastic/eui';
 import { BannerConfig, DEFAULT_BANNER_HEIGHT, HIDDEN_BANNER_HEIGHT } from '../../common';
 import { LinkRenderer } from './link_renderer';
-import { HttpStart } from '../../../../core/public';
+import { HttpStart, CoreStart } from '../../../../core/public';
 
 const ReactMarkdownLazy = React.lazy(() => import('react-markdown'));
 
@@ -28,12 +28,25 @@ interface BannerApiResponse {
 
 interface GlobalBannerProps {
   http: HttpStart;
+  uiSettings?: CoreStart['uiSettings'];
 }
 
-export const GlobalBanner: React.FC<GlobalBannerProps> = ({ http }) => {
+export const GlobalBanner: React.FC<GlobalBannerProps> = ({ http, uiSettings }) => {
   const [bannerConfig, setBannerConfig] = useState<BannerConfig | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isNewHomePage, setIsNewHomePage] = useState<boolean>(false);
   const bannerRef = useRef<HTMLDivElement>(null);
+
+  // Check if new home page is enabled
+  useEffect(() => {
+    const checkNewHomePageSetting = async () => {
+      if (uiSettings) {
+        const useNewHomePage = await uiSettings.get('home:useNewHomePage');
+        setIsNewHomePage(!!useNewHomePage);
+      }
+    };
+    checkNewHomePageSetting();
+  }, [uiSettings]);
 
   // Fetch banner config from API when component mounts
   useEffect(() => {
@@ -66,14 +79,16 @@ export const GlobalBanner: React.FC<GlobalBannerProps> = ({ http }) => {
     fetchBannerConfig();
   }, [http]);
 
-  // Update the CSS variable with the banner's height
+  // Update the CSS variable with the banner's height and toggle banner-visible class
   useEffect(() => {
     // Add a smooth transition when changing banner visibility
     document.documentElement.style.transition = 'padding-top 0.3s ease';
 
-    // If banner is not visible, set height to 0
+    // If banner is not visible, set height to 0 and remove banner-visible classes
     if (!bannerConfig?.isVisible) {
       document.documentElement.style.setProperty('--global-banner-height', HIDDEN_BANNER_HEIGHT);
+      document.documentElement.classList.remove('banner-visible');
+      document.documentElement.classList.remove('banner-visible-new');
 
       // Reset the transition after a delay
       setTimeout(() => {
@@ -85,6 +100,14 @@ export const GlobalBanner: React.FC<GlobalBannerProps> = ({ http }) => {
 
     // Set an initial non-zero value to ensure CSS takes effect
     document.documentElement.style.setProperty('--global-banner-height', DEFAULT_BANNER_HEIGHT);
+    // Add appropriate banner-visible class based on home page setting
+    if (isNewHomePage) {
+      document.documentElement.classList.add('banner-visible-new');
+      document.documentElement.classList.remove('banner-visible');
+    } else {
+      document.documentElement.classList.add('banner-visible');
+      document.documentElement.classList.remove('banner-visible-new');
+    }
 
     // Reset the transition after a delay
     setTimeout(() => {
@@ -121,6 +144,9 @@ export const GlobalBanner: React.FC<GlobalBannerProps> = ({ http }) => {
 
         // Reset the height when banner is removed
         document.documentElement.style.setProperty('--global-banner-height', HIDDEN_BANNER_HEIGHT);
+        // Remove banner-visible classes when banner is hidden
+        document.documentElement.classList.remove('banner-visible');
+        document.documentElement.classList.remove('banner-visible-new');
 
         // Reset the transition after a delay
         setTimeout(() => {
@@ -128,7 +154,7 @@ export const GlobalBanner: React.FC<GlobalBannerProps> = ({ http }) => {
         }, 300);
       }
     };
-  }, [bannerConfig]);
+  }, [bannerConfig, isNewHomePage]);
 
   // Hide banner when close button is clicked
   const hideBanner = () => {
