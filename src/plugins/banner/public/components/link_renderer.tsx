@@ -10,6 +10,7 @@
  */
 
 import React from 'react';
+import { EuiLink } from '@elastic/eui';
 
 /**
  * Custom link renderer for markdown links to open in new tab
@@ -21,8 +22,8 @@ export interface LinkRendererProps {
 
 export const LinkRenderer: React.FC<LinkRendererProps> = ({ href, children }) => {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer">
+    <EuiLink href={href} target="_blank">
       {children}
-    </a>
+    </EuiLink>
   );
 };
