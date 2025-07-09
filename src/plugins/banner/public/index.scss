@@ -30,52 +30,52 @@ $expandedHeaderWidth: $headerWidth * 2;
   min-height: var(--global-banner-height);
 }
 
-/* stylelint-disable @osd/stylelint/no_modifying_global_selectors */
-
 /**
- * 4. Header positioning - Places headers below the banner
+ * 3. Header positioning - Places headers below the banner
  *    expandedHeader: directly below the banner
  *    primaryHeader: below the expanded header
  */
-.expandedHeader {
-  top: var(--global-banner-height) !important;
+.headerGlobalNav--withBanner .expandedHeader {
+  top: var(--global-banner-height);
 }
 
-.primaryHeader:not(.newTopNavHeader) {
-  top: calc(var(--global-banner-height) + $headerWidth) !important;
+.headerGlobalNav--withBanner .primaryHeader:not(.newTopNavHeader) {
+  top: calc(var(--global-banner-height) + $headerWidth);
 }
 
 /**
  * 4. Fix for body padding when header is expanded and fixed
  *    Ensures content doesn't overlap with headers
  */
-.headerIsExpanded.euiBody--headerIsFixed {
-  padding-top: calc(var(--global-banner-height) + $expandedHeaderWidth) !important;
-}
+
+/* .headerGlobalNav--withBanner .headerIsExpanded.euiBody--headerIsFixed {
+  padding-top: calc(var(--global-banner-height) + $expandedHeaderWidth);
+} */
 
 /**
  * 5. Fix for flayout position when header is expanded and fixed
  *    Ensures content doesn't overlap with headers
  */
-.euiOverlayMask {
-  top: calc(var(--global-banner-height) + $expandedHeaderWidth) !important;
-}
 
-.euiFlyout {
-  top: calc(var(--global-banner-height) + $expandedHeaderWidth) !important;
-}
+/* .headerGlobalNav--withBanner .euiOverlayMask {
+  top: calc(var(--global-banner-height) + $expandedHeaderWidth);
+} */
+
+/* .headerGlobalNav--withBanner .euiFlyout {
+  top: calc(var(--global-banner-height) + $expandedHeaderWidth);
+} */
 
 /**
  * 6. Override content area min-height to account for global banner
  *    Ensures content area is properly sized when banner is present
  */
-.app-wrapper {
-  min-height: calc(100vh - $expandedHeaderWidth - var(--global-banner-height)) !important;
-}
 
-.headerIsExpanded .homWrapper {
-  min-height: calc(100vh - $expandedHeaderWidth - var(--global-banner-height)) !important;
+/* .headerGlobalNav--withBanner .app-wrapper {
+  min-height: calc(100vh - $expandedHeaderWidth - var(--global-banner-height));
 }
-/* stylelint-enable @osd/stylelint/no_modifying_global_selectors */
-
+.headerGlobalNav--withBanner .headerIsExpanded .homWrapper {
+  min-height: calc(100vh - $expandedHeaderWidth - var(--global-banner-height));
+}
+ */
+ 
 /* End of Global Banner Positioning */
