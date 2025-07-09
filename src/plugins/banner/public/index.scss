@@ -44,29 +44,7 @@ $expandedHeaderWidth: $headerWidth * 2;
 }
 
 /**
- * 4. Fix for body padding when header is expanded and fixed
- *    Ensures content doesn't overlap with headers
- */
-
-/* .headerGlobalNav--withBanner .headerIsExpanded.euiBody--headerIsFixed {
-  padding-top: calc(var(--global-banner-height) + $expandedHeaderWidth);
-} */
-
-/**
- * 5. Fix for flayout position when header is expanded and fixed
- *    Ensures content doesn't overlap with headers
- */
-
-/* .headerGlobalNav--withBanner .euiOverlayMask {
-  top: calc(var(--global-banner-height) + $expandedHeaderWidth);
-} */
-
-/* .headerGlobalNav--withBanner .euiFlyout {
-  top: calc(var(--global-banner-height) + $expandedHeaderWidth);
-} */
-
-/**
- * 6. Override content area min-height to account for global banner
+ * 4. Override content area min-height to account for global banner
  *    Ensures content area is properly sized when banner is present
  */
 
@@ -77,5 +55,5 @@ $expandedHeaderWidth: $headerWidth * 2;
   min-height: calc(100vh - $expandedHeaderWidth - var(--global-banner-height));
 }
  */
- 
+
 /* End of Global Banner Positioning */
