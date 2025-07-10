@@ -25,7 +25,7 @@ $expandedHeaderWidth: $headerWidth * 2;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1100; /* Higher than header z-index (1000) */
+  z-index: 1100;
   width: 100%;
   min-height: var(--global-banner-height);
 }
@@ -42,18 +42,5 @@ $expandedHeaderWidth: $headerWidth * 2;
 .headerGlobalNav--withBanner .primaryHeader:not(.newTopNavHeader) {
   top: calc(var(--global-banner-height) + $headerWidth);
 }
-
-/**
- * 4. Override content area min-height to account for global banner
- *    Ensures content area is properly sized when banner is present
- */
-
-/* .headerGlobalNav--withBanner .app-wrapper {
-  min-height: calc(100vh - $expandedHeaderWidth - var(--global-banner-height));
-}
-.headerGlobalNav--withBanner .headerIsExpanded .homWrapper {
-  min-height: calc(100vh - $expandedHeaderWidth - var(--global-banner-height));
-}
- */
 
 /* End of Global Banner Positioning */
