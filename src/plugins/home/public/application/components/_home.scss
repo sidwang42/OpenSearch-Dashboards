@@ -28,14 +28,16 @@
  * under the License.
  */
 
+@import "src/core/public/variables";
+
 .homWrapper {
   background-color: $euiColorEmptyShade;
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - #{$euiHeaderHeightCompensation});
+  min-height: calc(100vh - #{$osdHeaderOffset});
 
   .headerIsExpanded & {
-    min-height: calc(100vh - #{$euiHeaderHeightCompensation * 2});
+    min-height: calc(100vh - #{$osdHeaderOffsetExpanded});
   }
 }
 
