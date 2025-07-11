@@ -1,0 +1,2 @@
+feat:
+- Add wrapper & CSS-variable offsets to support Global Banner without `!important` hacks ([#10125](https://github.com/opensearch-project/OpenSearch-Dashboards/pull/10125))
