@@ -12,7 +12,7 @@
 /**
  * DOM element ID for the banner container
  */
-export const BANNER_CONTAINER_ID = 'pluginGlobalBanner';
+export const BANNER_CONTAINER_ID = 'headerBannerContainer';
 
 /**
  * Default height of the banner when visible (in pixels)

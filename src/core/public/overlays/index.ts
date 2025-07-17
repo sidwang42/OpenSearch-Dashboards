@@ -41,3 +41,4 @@ export {
   SIDECAR_DOCKED_MODE,
   getSidecarLeftNavStyle,
 } from './sidecar';
+export { OverlayHeaderBannerStart } from './headerbanner';

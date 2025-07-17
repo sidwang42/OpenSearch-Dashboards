@@ -88,6 +88,8 @@ import { HeaderNavControls } from './header_nav_controls';
 import { HomeLoader } from './home_loader';
 import { RecentItems } from './recent_items';
 import { GlobalSearchCommand } from '../../global_search';
+import { HeaderBanner } from '../../../overlays/headerbanner/header_banner';
+import { OverlayHeaderBannerStart } from '../../../overlays';
 
 export interface HeaderProps {
   http: HttpStart;
@@ -132,6 +134,7 @@ export interface HeaderProps {
   useUpdatedHeader?: boolean;
   globalSearchCommands?: GlobalSearchCommand[];
   injectedMetadata?: InjectedMetadataStart;
+  headerBanner?: OverlayHeaderBannerStart;
 }
 
 const hasValue = (value: any) => {
@@ -159,6 +162,7 @@ export function Header({
   useUpdatedHeader,
   globalSearchCommands,
   injectedMetadata,
+  headerBanner,
   ...observables
 }: HeaderProps) {
   const isVisible = useObservable(observables.isVisible$, false);
@@ -670,7 +674,9 @@ export function Header({
 
   return (
     <>
-      {isBannerEnabled && !useUpdatedHeader && <div id="pluginGlobalBanner" />}
+      {isBannerEnabled && !useUpdatedHeader && headerBanner && (
+        <HeaderBanner headerBanner$={headerBanner.getHeaderBanner$()} />
+      )}
       <header className={className} data-test-subj="headerGlobalNav">
         <div id="globalHeaderBars">
           {!useUpdatedHeader && useExpandedHeader && renderLegacyExpandedHeader()}

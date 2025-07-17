@@ -9,13 +9,18 @@
  * GitHub history for details.
  */
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Subscription } from 'rxjs';
 import { CoreSetup, CoreStart, Plugin, PluginInitializerContext } from '../../../core/public';
 import { BannerPluginSetup, BannerPluginStart } from './types';
 import { BannerService } from './services/banner_service';
-import { renderBanner, unmountBanner, setInitialBannerHeight } from './services/render_banner';
+import { setInitialBannerHeight } from './services/render_banner';
+import { GlobalBanner } from './components/global_banner';
 
 export class BannerPlugin implements Plugin<BannerPluginSetup, BannerPluginStart> {
   private readonly bannerService = new BannerService();
+  private subscription: Subscription | undefined;
 
   constructor(private readonly initializerContext: PluginInitializerContext) {}
 
@@ -41,8 +46,41 @@ export class BannerPlugin implements Plugin<BannerPluginSetup, BannerPluginStart
     // Set initial height to prevent layout shifts
     setInitialBannerHeight(currentConfig.isVisible);
 
-    // Render the banner component
-    renderBanner(this.bannerService);
+    // Use the headerBanner service to render the banner
+    if (currentConfig.isVisible) {
+      core.overlays.headerBanner.setHeaderBanner((element) => {
+        // Render the banner component into the provided element
+        ReactDOM.render(
+          React.createElement(GlobalBanner, { bannerService: this.bannerService }),
+          element
+        );
+
+        // Return an unmount callback
+        return () => {
+          ReactDOM.unmountComponentAtNode(element);
+        };
+      });
+    }
+
+    // Subscribe to banner config changes to update visibility
+    this.subscription = this.bannerService.getBannerConfig$().subscribe((config) => {
+      if (config.isVisible) {
+        core.overlays.headerBanner.setHeaderBanner((element) => {
+          // Render the banner component into the provided element
+          ReactDOM.render(
+            React.createElement(GlobalBanner, { bannerService: this.bannerService }),
+            element
+          );
+
+          // Return an unmount callback
+          return () => {
+            ReactDOM.unmountComponentAtNode(element);
+          };
+        });
+      } else {
+        core.overlays.headerBanner.clearHeaderBanner();
+      }
+    });
 
     return {
       bannerService: this.bannerService,
@@ -50,6 +88,10 @@ export class BannerPlugin implements Plugin<BannerPluginSetup, BannerPluginStart
   }
 
   public stop() {
-    unmountBanner();
+    // Clean up subscription if it exists
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    // No need to unmount, the headerBanner service will handle cleanup
   }
 }

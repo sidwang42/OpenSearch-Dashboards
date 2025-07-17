@@ -421,6 +421,7 @@ export class ChromeService {
           useUpdatedHeader={this.useUpdatedHeader}
           globalSearchCommands={globalSearch.getAllSearchCommands()}
           injectedMetadata={injectedMetadata}
+          headerBanner={overlays.headerBanner}
         />
       ),
 

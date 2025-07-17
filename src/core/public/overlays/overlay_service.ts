@@ -34,6 +34,7 @@ import { OverlayBannersStart, OverlayBannersService } from './banners';
 import { FlyoutService, OverlayFlyoutStart } from './flyout';
 import { ModalService, OverlayModalStart } from './modal';
 import { SidecarService, OverlaySidecarStart } from './sidecar';
+import { OverlayHeaderBannerStart, OverlayHeaderBannerService } from './headerbanner';
 
 interface StartDeps {
   i18n: I18nStart;
@@ -47,6 +48,7 @@ export class OverlayService {
   private modalService = new ModalService();
   private flyoutService = new FlyoutService();
   private sidecarService = new SidecarService();
+  private headerBannerService = new OverlayHeaderBannerService();
 
   public start({ i18n, targetDomElement, uiSettings }: StartDeps): OverlayStart {
     const flyoutElement = document.createElement('div');
@@ -65,6 +67,8 @@ export class OverlayService {
       targetDomElement: sidecarElement,
     });
 
+    const headerBanner = this.headerBannerService.start({ i18n });
+
     return {
       banners,
       openFlyout: flyouts.open.bind(flyouts),
@@ -72,6 +76,7 @@ export class OverlayService {
       openModal: modals.open.bind(modals),
       openConfirm: modals.openConfirm.bind(modals),
       sidecar: sidecars,
+      headerBanner,
     };
   }
 }
@@ -90,4 +95,6 @@ export interface OverlayStart {
   openConfirm: OverlayModalStart['openConfirm'];
   /** {@link OverlaySidecarStart#open} */
   sidecar: OverlaySidecarStart;
+  /** {@link OverlayHeaderBannerStart} */
+  headerBanner: OverlayHeaderBannerStart;
 }
