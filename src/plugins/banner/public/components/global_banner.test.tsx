@@ -74,15 +74,15 @@ describe('GlobalBanner', () => {
     expect(httpMock.get).toHaveBeenCalledTimes(1);
   });
 
-  test('renders loading state initially', async () => {
+  test('renders nothing while loading', async () => {
     // Don't resolve the HTTP get promise yet
     httpMock.get = jest.fn().mockImplementation(() => new Promise(() => {}));
 
     wrapper = mount(<GlobalBanner http={httpMock} />);
 
-    // Check for loading spinner
-    expect(wrapper.find('EuiLoadingSpinner').exists()).toBe(true);
-    expect(wrapper.find('EuiCallOut').props().iconType).toBe('loading');
+    // Should render nothing while loading
+    expect(wrapper.find('EuiCallOut').exists()).toBe(false);
+    expect(wrapper.html()).toBe(null);
   });
 
   test('renders banner with content from API', async () => {

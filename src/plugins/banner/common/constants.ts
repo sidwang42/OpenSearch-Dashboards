@@ -10,11 +10,6 @@
  */
 
 /**
- * DOM element ID for the banner container
- */
-export const BANNER_CONTAINER_ID = 'pluginGlobalBanner';
-
-/**
  * Height of the banner when hidden (in pixels)
  */
 export const HIDDEN_BANNER_HEIGHT = '0px';

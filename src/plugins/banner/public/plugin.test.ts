@@ -9,7 +9,6 @@
  * GitHub history for details.
  */
 
-import { renderBannerMock, unmountBannerMock } from './plugin.test.mocks';
 import { BannerPlugin } from './plugin';
 import { coreMock } from '../../../core/public/mocks';
 
@@ -18,8 +17,7 @@ const setGlobalBannerMock = jest.fn();
 
 describe('BannerPlugin', () => {
   beforeEach(() => {
-    renderBannerMock.mockClear();
-    unmountBannerMock.mockClear();
+    setGlobalBannerMock.mockClear();
   });
 
   describe('setup', () => {
@@ -29,7 +27,6 @@ describe('BannerPlugin', () => {
       const setup = plugin.setup(coreSetup);
 
       expect(setup).toEqual({});
-      expect(renderBannerMock).not.toHaveBeenCalled();
     });
   });
 

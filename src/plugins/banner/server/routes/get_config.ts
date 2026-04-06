@@ -59,14 +59,16 @@ export function defineRoutes(router: IRouter, bannerSetup: BannerPluginSetup) {
           // Check if external config was successfully fetched
           if (!externalConfig) {
             bannerSetup.logger.warn(
-              `Failed to load banner config from external URL: ${pluginConfig.externalLink}, using UI settings instead`
+              `Failed to load banner config from external URL: ${pluginConfig.externalLink}, hiding banner`
             );
+            // Hide the banner when external config cannot be fetched
+            config.isVisible = false;
           }
           // Check if the configuration is valid
           else if (!validateBannerConfig(externalConfig, bannerSetup.logger)) {
-            bannerSetup.logger.error(
-              'Banner configuration validation failed, using default settings'
-            );
+            bannerSetup.logger.error('Banner configuration validation failed, hiding banner');
+            // Hide the banner when external config is invalid
+            config.isVisible = false;
           } else {
             config = {
               ...config,
@@ -75,6 +77,8 @@ export function defineRoutes(router: IRouter, bannerSetup: BannerPluginSetup) {
           }
         } catch (error) {
           bannerSetup.logger.error(`Error loading banner config from external URL: ${error}`);
+          // Hide the banner when an unexpected error occurs fetching external config
+          config.isVisible = false;
         }
       }
 

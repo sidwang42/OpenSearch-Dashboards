@@ -188,7 +188,7 @@ describe('Banner routes', () => {
       });
     });
 
-    test('uses default config when external config validation fails', async () => {
+    test('hides banner when external config validation fails', async () => {
       // Mock the fetchExternalConfig to return a config
       const mockExternalConfig = {
         content: 'External Banner Content',
@@ -248,11 +248,10 @@ describe('Banner routes', () => {
       // Verify validateBannerConfig was called with the external config
       expect(validateBannerConfig).toHaveBeenCalledWith(mockExternalConfig, expect.anything());
 
-      // Verify the response uses the default config values
+      // Verify the banner is hidden when validation fails
       expect(mockResponse.ok).toHaveBeenCalledWith({
         body: expect.objectContaining({
-          content: 'Test Banner Content',
-          color: 'primary',
+          isVisible: false,
         }),
       });
 
@@ -260,7 +259,7 @@ describe('Banner routes', () => {
       expect(mockBannerSetup.logger.error).toHaveBeenCalled();
     });
 
-    test('uses default config when fetchExternalConfig returns null', async () => {
+    test('hides banner when fetchExternalConfig returns null', async () => {
       // Mock fetchExternalConfig to return null (e.g., due to network error)
       (fetchExternalConfig as jest.Mock).mockResolvedValue(null);
 
@@ -309,11 +308,10 @@ describe('Banner routes', () => {
         expect.anything()
       );
 
-      // Verify the response uses the default config values
+      // Verify the banner is hidden when external config cannot be fetched
       expect(mockResponse.ok).toHaveBeenCalledWith({
         body: expect.objectContaining({
-          content: 'Test Banner Content',
-          color: 'primary',
+          isVisible: false,
         }),
       });
 
@@ -321,7 +319,7 @@ describe('Banner routes', () => {
       expect(mockBannerSetup.logger.warn).toHaveBeenCalled();
     });
 
-    test('handles error thrown during fetch process', async () => {
+    test('hides banner when error thrown during fetch process', async () => {
       // Mock fetchExternalConfig to throw an error
       const mockError = new Error('Network error');
       (fetchExternalConfig as jest.Mock).mockRejectedValue(mockError);
@@ -371,11 +369,10 @@ describe('Banner routes', () => {
         expect.anything()
       );
 
-      // Verify the response uses the default config values
+      // Verify the banner is hidden when fetch throws an error
       expect(mockResponse.ok).toHaveBeenCalledWith({
         body: expect.objectContaining({
-          content: 'Test Banner Content',
-          color: 'primary',
+          isVisible: false,
         }),
       });
 
