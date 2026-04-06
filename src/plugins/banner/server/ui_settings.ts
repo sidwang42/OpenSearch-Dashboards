@@ -60,15 +60,15 @@ export const getDefaultBannerSettings = (): Record<string, UiSettingsParams> => 
       }),
       value: 'primary',
       type: 'select',
-      options: ['primary', 'warning', 'danger'],
+      options: ['primary', 'success', 'warning'],
       description: i18n.translate('banner.ui_settings.params.colorText', {
         defaultMessage: 'Color scheme for the global banner.',
       }),
       category: ['banner'],
       schema: schema.oneOf([
         schema.literal('primary'),
+        schema.literal('success'),
         schema.literal('warning'),
-        schema.literal('danger'),
       ]),
       requiresPageReload: true,
     },
@@ -77,19 +77,12 @@ export const getDefaultBannerSettings = (): Record<string, UiSettingsParams> => 
         defaultMessage: 'Banner icon',
       }),
       value: 'iInCircle',
-      type: 'select',
-      options: ['iInCircle', 'help', 'alert', 'warning', 'check', 'bell'],
       description: i18n.translate('banner.ui_settings.params.iconTypeText', {
-        defaultMessage: 'Icon to display in the global banner.',
+        defaultMessage:
+          'Icon to display in the global banner. Any valid OUI icon name (e.g. iInCircle, alert, bell, check, checkInCircleFilled).',
       }),
       category: ['banner'],
-      schema: schema.oneOf([
-        schema.literal('iInCircle'),
-        schema.literal('help'),
-        schema.literal('alert'),
-        schema.literal('warning'),
-        schema.literal('bell'),
-      ]),
+      schema: schema.string(),
       requiresPageReload: true,
     },
     'banner:useMarkdown': {

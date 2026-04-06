@@ -49,6 +49,22 @@ export class BannerPlugin implements Plugin<BannerPluginSetup, BannerPluginStart
       bannerSettings['banner:useMarkdown'].value = this.pluginConfig.useMarkdown;
     }
 
+    // When externalLink is configured, hide content/color/icon/markdown settings
+    // since they are controlled by the external source
+    if (this.pluginConfig.externalLink) {
+      const hiddenKeys: Array<keyof typeof bannerSettings> = [
+        'banner:content',
+        'banner:color',
+        'banner:iconType',
+        'banner:useMarkdown',
+      ];
+      for (const key of hiddenKeys) {
+        if (bannerSettings[key]) {
+          bannerSettings[key].readonly = true;
+        }
+      }
+    }
+
     // Register UI settings with updated default values
     core.uiSettings.register(bannerSettings);
 

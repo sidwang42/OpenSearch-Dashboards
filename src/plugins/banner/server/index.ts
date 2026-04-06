@@ -22,6 +22,19 @@ export const config: PluginConfigDescriptor<BannerPluginConfigType> = {
     useMarkdown: true,
   },
   schema: configSchema,
+  deprecations: ({ rename, unused }) => [
+    (settings, fromPath, addDeprecation) => {
+      if (settings?.banner?.externalLink) {
+        settings.uiSettings = settings.uiSettings || {};
+        settings.uiSettings.overrides = {
+          ...(settings.uiSettings.overrides || {}),
+          'banner:active': settings.banner.isVisible ?? true,
+        };
+      }
+
+      return settings;
+    },
+  ],
 };
 
 export function plugin(initializerContext: PluginInitializerContext) {
