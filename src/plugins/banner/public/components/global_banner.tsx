@@ -13,6 +13,7 @@ import React, { Fragment, useEffect, useState, Suspense, useRef, useCallback } f
 import { EuiCallOut, EuiLoadingSpinner } from '@elastic/eui';
 import { BannerConfig, HIDDEN_BANNER_HEIGHT, DEFAULT_BANNER_CONFIG } from '../../common';
 import { LinkRenderer } from './link_renderer';
+import { AutoLinkText } from './auto_link_text';
 import { HttpStart } from '../../../../core/public';
 
 const ReactMarkdownLazy = React.lazy(() => import('react-markdown'));
@@ -55,9 +56,10 @@ export const GlobalBanner: React.FC<GlobalBannerProps> = ({ http }) => {
         setBannerConfig(response);
       }
     } catch (error) {
-      // Hide banner on error
+      // Hide banner on error — don't show default "Banner Content"
       setBannerConfig({
         ...DEFAULT_BANNER_CONFIG,
+        isVisible: false,
       });
     } finally {
       setIsLoading(false);
@@ -122,17 +124,7 @@ export const GlobalBanner: React.FC<GlobalBannerProps> = ({ http }) => {
     }
   }, []);
 
-  if (isLoading) {
-    return (
-      <div ref={bannerRef}>
-        <EuiCallOut iconType="loading">
-          <EuiLoadingSpinner size="m" /> Loading banner...
-        </EuiCallOut>
-      </div>
-    );
-  }
-
-  if (!bannerConfig || !bannerConfig.isVisible) {
+  if (isLoading || !bannerConfig || !bannerConfig.isVisible) {
     return null;
   }
 
@@ -157,7 +149,7 @@ export const GlobalBanner: React.FC<GlobalBannerProps> = ({ http }) => {
       );
     }
 
-    return bannerConfig.content;
+    return <AutoLinkText text={bannerConfig.content} />;
   };
 
   return (
